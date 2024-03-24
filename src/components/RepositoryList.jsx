@@ -61,12 +61,12 @@ const RepositoryList = () => {
   const { repositories } = useRepositories();
   console.log(repositories);
 
-  // const repositoryNodes = repositories
-  //   ? repositories.edges.map((edge) => edge.node)
-  //   : [];
+  const repositoryNodes = repositories
+    ? repositories.edges.map((edge) => edge.node)
+    : [];
   return (
     <FlatList
-      data={loc}
+      data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => <RepositoryItem item={item} />}
       keyExtractor={(item) => item.id}
