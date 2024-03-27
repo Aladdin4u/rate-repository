@@ -1,10 +1,9 @@
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
-import { TextInput, Pressable, View, StyleSheet } from "react-native";
-import useSignIn from "../hook/useSignIn";
+import { TextInput, View, StyleSheet } from "react-native";
 
-import Text from "./Text";
+import Button from "../Button";
+import Text from "../Text";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,16 +12,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   inputText: {
-    padding: 15,
-    border: "1px solid gray",
-    borderRadius: 4,
-  },
-  submitButton: {
-    backgroundColor: "#0366d6",
-    color: "white",
-    textAlign: "center",
-    padding: 15,
-    border: "1px solid gray",
+    paddingVertical: 12,
     borderRadius: 4,
   },
 });
@@ -36,7 +26,7 @@ const validationSchema = yup.object().shape({
   username: yup.string().required("Username is required"),
   password: yup
     .string()
-    .min(6, "Password must be at least 8 characters long")
+    .min(6, "Password must be at least 6 characters long")
     .required("Password is required"),
 });
 
@@ -68,30 +58,9 @@ const SignInForm = ({ onSubmit }) => {
       {formik.touched.password && formik.errors.password && (
         <Text style={{ color: "red" }}>{formik.errors.password}</Text>
       )}
-      <Pressable onPress={formik.handleSubmit}>
-        <Text style={styles.submitButton} fontWeight="bold">
-          Sign in
-        </Text>
-      </Pressable>
+      <Button onSubmit={formik.handleSubmit} value="Sign In"></Button>
     </View>
   );
 };
 
-const SignIn = () => {
-  const [signIn] = useSignIn();
-  const navigate = useNavigate();
-
-  const onSubmit = async (values) => {
-    const { username, password } = values;
-
-    try {
-      await signIn({ username, password });
-      navigate("/");
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  return <SignInForm onSubmit={onSubmit} />;
-};
-
-export default SignIn;
+export default SignInForm;

@@ -47,42 +47,51 @@ const RepositoryItem = ({ item }) => {
     return n;
   };
   return (
-    <View style={styles.flexContainer}>
-      <View style={styles.flexItemA}>
+    <View testID="repositoryItem" style={styles.flexContainer}>
+      <View testID="repositoryItem" style={styles.flexItemA}>
         <Image
           source={{ uri: item.ownerAvatarUrl }}
-          style={{ width: 40, height: 40, borderRadius: 4 }}
+          style={{ width: 60, height: 60, borderRadius: 6 }}
         />
         <View style={styles.flexItemD}>
-          <Text color="textPrimary" fontSize="subheading" fontWeight="bold">
-            {item.fullName}
-          </Text>
-          <Text color="textSecondary">{item.description}</Text>
-          <View style={{ display: "flex", flexDirection: "row" }}>
+          <View testID="repositoryName">
+            <Text color="textPrimary" fontSize="subheading" fontWeight="bold">
+              {item.fullName}
+            </Text>
+          </View>
+          <View testID="repositoryDescription">
+            <Text color="textSecondary">{item.description}</Text>
+          </View>
+          <View
+            testID="repositoryLanguage"
+            style={{ display: "flex", flexDirection: "row" }}
+          >
             <Text style={styles.tag}>{item.language}</Text>
           </View>
         </View>
       </View>
       <View style={styles.flexItemB}>
-        <View style={styles.flexItemC}>
+        <View testID="repositorStar" style={styles.flexItemC}>
           <Text color="textPrimary" fontWeight="bold">
             {format(item.stargazersCount)}
           </Text>
           <Text color="textSecondary">Stars</Text>
         </View>
-        <View style={styles.flexItemC}>
+        <View testID="repositoryFork" style={styles.flexItemC}>
           <Text color="textPrimary" fontWeight="bold">
             {format(item.forksCount)}
           </Text>
           <Text color="textSecondary">Forks</Text>
         </View>
-        <View style={styles.flexItemC}>
+        <View testID="repositoryReview" style={styles.flexItemC}>
           <Text color="textPrimary" fontWeight="bold">
             {item.reviewCount}
           </Text>
-          <Text color="textSecondary">Review</Text>
+          <Text testID="repositoryItem" color="textSecondary">
+            Review
+          </Text>
         </View>
-        <View style={styles.flexItemC}>
+        <View testID="repositoryRating" style={styles.flexItemC}>
           <Text color="textPrimary" fontWeight="bold">
             {item.ratingAverage}
           </Text>
