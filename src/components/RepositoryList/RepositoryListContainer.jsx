@@ -1,5 +1,7 @@
-import { View, StyleSheet, FlatList } from "react-native-web";
-import RepositoryItem from "./RepositoryItem";
+import { FlatList } from "react-native";
+
+import ItemSeparator from "../ItemSeparator";
+import RepositoryItem from "../RepositoryItem";
 
 const localrepositories = [
   {
@@ -47,14 +49,6 @@ const localrepositories = [
     ownerAvatarUrl: "https://avatars3.githubusercontent.com/u/13142323?v=4",
   },
 ];
-
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-  },
-});
-
-const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryListContainer = ({ repositories }) => {
   const repositoryNodes = repositories

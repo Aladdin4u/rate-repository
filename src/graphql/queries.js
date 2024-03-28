@@ -44,3 +44,27 @@ export const GET_LOGGEDIN_USER = gql`
     }
   }
 `;
+
+export const GET_REPOSITORY = gql`
+  query ($repositoryId: ID!) {
+    repository(id: $repositoryId) {
+      ...repostoriesDetails
+      url
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+  ${REPOSITORY_DETAILS}
+`;
