@@ -1,20 +1,17 @@
 import * as yup from "yup";
-import { useFormik } from "formik";
-import { TextInput, View, StyleSheet } from "react-native";
+import { Formik } from "formik";
+import { View, StyleSheet } from "react-native";
+import TextInput from "../TextInput";
 
 import Button from "../Button";
-import Text from "../Text";
+import FormError from "../FormError";
 
 const styles = StyleSheet.create({
   container: {
     display: "flex",
     gap: 10,
     padding: 15,
-  },
-  inputText: {
-    paddingVertical: 12,
-    borderRadius: 4,
-  },
+  }
 });
 
 const initialValues = {
@@ -30,36 +27,45 @@ const validationSchema = yup.object().shape({
     .required("Password is required"),
 });
 
-const SignInForm = ({ onSubmit }) => {
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit,
-  });
-
+const SignInForm = ({ onSubmit, submissionError }) => {
   return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Username"
-        value={formik.values.username}
-        onChangeText={formik.handleChange("username")}
-        style={styles.inputText}
-      />
-      {formik.touched.username && formik.errors.username && (
-        <Text style={{ color: "red" }}>{formik.errors.username}</Text>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        touched,
+        errors,
+      }) => (
+        <View style={styles.container}>
+          <TextInput
+            placeholder="Username"
+            value={values.username}
+            onChangeText={handleChange("username")}
+            onBur={handleBlur("username")}
+            error={touched.username && errors.username}
+            errorMessage={errors.username}
+            validate={submissionError}
+          />
+          <TextInput
+            placeholder="Password"
+            value={values.password}
+            onChangeText={handleChange("password")}
+            secureTextEntry
+            error={touched.password && errors.password}
+            errorMessage={errors.password}
+            validate={submissionError}
+          />
+          <FormError errorMessage={submissionError} />
+          <Button onSubmit={handleSubmit} value="Sign In" />
+        </View>
       )}
-      <TextInput
-        placeholder="Password"
-        value={formik.values.password}
-        onChangeText={formik.handleChange("password")}
-        style={styles.inputText}
-        secureTextEntry
-      />
-      {formik.touched.password && formik.errors.password && (
-        <Text style={{ color: "red" }}>{formik.errors.password}</Text>
-      )}
-      <Button onSubmit={formik.handleSubmit} value="Sign In"></Button>
-    </View>
+    </Formik>
   );
 };
 

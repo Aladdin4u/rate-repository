@@ -5,39 +5,53 @@ import theme from "../../theme";
 import ProfileInfo from "../ProfileInfo";
 
 const styles = StyleSheet.create({
-  profileContainer: {
+  reviewContainer: {
     flexDirection: "row",
-    flexGrow: 0,
+    flexGrow: 1,
+    flexShrink: 1,
     gap: 20,
     padding: 15,
     backgroundColor: theme.colors.white,
   },
-  profileInfoContainer: {
+  reviewInfoContainer: {
     display: "flex",
-    flexGrow: 0,
+    flexGrow: 1,
+    flexShrink: 1,
     gap: 10,
     justifyContent: "space-between",
   },
 });
 
 const ReviewItem = ({ review }) => {
+  const formatDate = (d) => {
+    const date = new Date(d);
+    let day = date.getDay();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    day < 10 ? (day = String(day).padStart(2, "0")) : day;
+    month < 10 ? (month = String(month).padStart(2, "0")) : month;
+
+    return `${day}.${month}.${year}`;
+  };
   return (
-    <View style={styles.profileContainer}>
+    <View style={styles.reviewContainer}>
       <Rating rating={review.rating} />
-      <View style={styles.profileInfoContainer}>
+      <View style={styles.reviewInfoContainer}>
         <ProfileInfo
           color="textPrimary"
           fontSize="subheading"
           fontWeight="bold"
           value={review.user.username}
         />
-        <ProfileInfo color="textSecondary" value={review.createdAt} />
+        <ProfileInfo
+          color="textSecondary"
+          value={formatDate(review.createdAt)}
+        />
         <ProfileInfo
           color="textPrimary"
           fontSize="subheading"
           value={review.text}
-          style={{ flexWrap: "wrap" }}
-          styleView={{ flexWrap: "wrap",  }}
         />
       </View>
     </View>

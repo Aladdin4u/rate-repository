@@ -14,12 +14,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  text: {
+    color: theme.colors.primary,
+  },
 });
 
 const Rating = ({ rating }) => {
   return (
     <View style={styles.rating}>
-      <Text>{rating}</Text>
+      <Text fontWeight="bold" fontSize="subheading" style={styles.text}>
+        {rating}
+      </Text>
     </View>
   );
 };

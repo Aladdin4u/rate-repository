@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
     padding: 15,
     gap: 15,
+    marginBottom: 10,
   },
 });
 

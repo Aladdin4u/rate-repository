@@ -37,7 +37,18 @@ const AppBar = () => {
       <ScrollView horizontal>
         <AppBarTab tabName="Repositries" path="/" style={styles.tab} />
         {data?.me ? (
-          <AppBarTab tabName="Sign out" onPress={signOut} style={styles.tab} />
+          <>
+            <AppBarTab
+              tabName="Create a review"
+              path="/review"
+              style={styles.tab}
+            />
+            <AppBarTab
+              tabName="Sign out"
+              onPress={signOut}
+              style={styles.tab}
+            />
+          </>
         ) : (
           <AppBarTab tabName="Sign in" path="/signin" style={styles.tab} />
         )}
