@@ -2,6 +2,7 @@ import { FlatList } from "react-native";
 
 import ItemSeparator from "../ItemSeparator";
 import RepositoryItem from "../RepositoryItem";
+import OrderRepositoryList from "./OrderRepoitoryList";
 
 const localrepositories = [
   {
@@ -50,7 +51,7 @@ const localrepositories = [
   },
 ];
 
-const RepositoryListContainer = ({ repositories }) => {
+const RepositoryListContainer = ({ repositories, orderSelected }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
@@ -61,6 +62,7 @@ const RepositoryListContainer = ({ repositories }) => {
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => <RepositoryItem item={item} />}
       keyExtractor={(item) => item.id}
+      ListHeaderComponent={() => <OrderRepositoryList orderSelected={orderSelected} />}
     />
   );
 };
