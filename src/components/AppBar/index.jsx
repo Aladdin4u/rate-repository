@@ -1,4 +1,5 @@
 import Constants from "expo-constants";
+import { useNavigate } from "react-router-dom";
 import { useApolloClient } from "@apollo/client";
 import { View, StyleSheet, ScrollView } from "react-native";
 
@@ -24,13 +25,16 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const apolloclient = useApolloClient();
-  const authStorage = useAuthStorage();
+  const navigate = useNavigate();
+
   const { data } = useAuthUser();
+  const authStorage = useAuthStorage();
+  const apolloclient = useApolloClient();
 
   const signOut = async () => {
     await authStorage.removeAccessToken();
     apolloclient.resetStore();
+    return navigate("/");
   };
   return (
     <View style={styles.container}>
@@ -50,7 +54,10 @@ const AppBar = () => {
             />
           </>
         ) : (
-          <AppBarTab tabName="Sign in" path="/signin" style={styles.tab} />
+          <>
+            <AppBarTab tabName="Sign in" path="/signin" style={styles.tab} />
+            <AppBarTab tabName="Sign up" path="/signup" style={styles.tab} />
+          </>
         )}
       </ScrollView>
     </View>
