@@ -1,8 +1,9 @@
+import React from "react"
 import { FlatList } from "react-native";
 
+import FilterHeader from "./FilterHeader";
 import ItemSeparator from "../ItemSeparator";
 import RepositoryItem from "../RepositoryItem";
-import OrderRepositoryList from "./OrderRepoitoryList";
 
 const localrepositories = [
   {
@@ -51,20 +52,33 @@ const localrepositories = [
   },
 ];
 
-const RepositoryListContainer = ({ repositories, orderSelected }) => {
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
-    : [];
+export class RepositoryListContainer extends React.Component {
+  renderHeader = () => {
+    const { orderSelected, searchQuery, setSearchQuery } = this.props;
 
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => <RepositoryItem item={item} />}
-      keyExtractor={(item) => item.id}
-      ListHeaderComponent={() => <OrderRepositoryList orderSelected={orderSelected} />}
-    />
-  );
-};
+    return (
+      <FilterHeader
+        orderSelected={orderSelected}
+        setSearchQuery={setSearchQuery}
+        searchQuery={searchQuery}
+      />
+    );
+  };
 
-export default RepositoryListContainer;
+  render() {
+    const { repositories } = this.props;
+    const repositoryNodes = repositories
+      ? repositories.edges.map((edge) => edge.node)
+      : [];
+
+    return (
+      <FlatList
+        data={repositoryNodes}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={({ item }) => <RepositoryItem item={item} />}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={this.renderHeader}
+      />
+    );
+  }
+}

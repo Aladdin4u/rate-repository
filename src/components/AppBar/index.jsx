@@ -39,7 +39,7 @@ const AppBar = () => {
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
-        <AppBarTab tabName="Repositries" path="/" style={styles.tab} />
+        <AppBarTab tabName="Repositories" path="/" style={styles.tab} />
         {data?.me ? (
           <>
             <AppBarTab

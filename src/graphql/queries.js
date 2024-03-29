@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { REPOSITORY_DETAILS } from "./fragments";
+import { REPOSITORY_DETAILS, REVIEW_DETAILS, USER_DETAILS } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
   query (
@@ -37,12 +37,20 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_LOGGEDIN_USER = gql`
-  query {
+  query getCurrentUser($includeReviews: Boolean = false) {
     me {
-      id
-      username
+      ...usersDetails
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            ...reviewsDetails
+          }
+        }
+      }
     }
   }
+  ${REVIEW_DETAILS}
+  ${USER_DETAILS}
 `;
 
 export const GET_REPOSITORY = gql`
@@ -53,13 +61,9 @@ export const GET_REPOSITORY = gql`
       reviews {
         edges {
           node {
-            id
-            text
-            rating
-            createdAt
+            ...reviewsDetails
             user {
-              id
-              username
+              ...usersDetails
             }
           }
         }
@@ -67,4 +71,6 @@ export const GET_REPOSITORY = gql`
     }
   }
   ${REPOSITORY_DETAILS}
+  ${REVIEW_DETAILS}
+  ${USER_DETAILS}
 `;
