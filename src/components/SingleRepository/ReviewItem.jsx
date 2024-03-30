@@ -1,6 +1,7 @@
 import { View, StyleSheet } from "react-native";
+import useFormatDate from "../../hook/useFormatDate";
 
-import Rating from "./Rating";
+import Rating from "../Rating";
 import theme from "../../theme";
 import ProfileInfo from "../ProfileInfo";
 
@@ -23,17 +24,6 @@ const styles = StyleSheet.create({
 });
 
 const ReviewItem = ({ review }) => {
-  const formatDate = (d) => {
-    const date = new Date(d);
-    let day = date.getDay();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-
-    day < 10 ? (day = String(day).padStart(2, "0")) : day;
-    month < 10 ? (month = String(month).padStart(2, "0")) : month;
-
-    return `${day}.${month}.${year}`;
-  };
   return (
     <View style={styles.reviewContainer}>
       <Rating rating={review.rating} />
@@ -42,11 +32,11 @@ const ReviewItem = ({ review }) => {
           color="textPrimary"
           fontSize="subheading"
           fontWeight="bold"
-          value={review.user.username}
+          value={review.user?.username}
         />
         <ProfileInfo
           color="textSecondary"
-          value={formatDate(review.createdAt)}
+          value={useFormatDate(review.createdAt)}
         />
         <ProfileInfo
           color="textPrimary"

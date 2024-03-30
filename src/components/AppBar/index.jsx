@@ -4,7 +4,7 @@ import { useApolloClient } from "@apollo/client";
 import { View, StyleSheet, ScrollView } from "react-native";
 
 import AppBarTab from "./AppBarTab";
-import useAuthUser from "../../hook/useAuthUser";
+import useCurrentUser from "../../hook/useCurrentUser";
 import useAuthStorage from "../../hook/useAuthStorage";
 
 const styles = StyleSheet.create({
@@ -26,8 +26,7 @@ const styles = StyleSheet.create({
 
 const AppBar = () => {
   const navigate = useNavigate();
-
-  const { data } = useAuthUser();
+  const { user } = useCurrentUser();
   const authStorage = useAuthStorage();
   const apolloclient = useApolloClient();
 
@@ -40,11 +39,16 @@ const AppBar = () => {
     <View style={styles.container}>
       <ScrollView horizontal>
         <AppBarTab tabName="Repositories" path="/" style={styles.tab} />
-        {data?.me ? (
+        {user ? (
           <>
             <AppBarTab
               tabName="Create a review"
               path="/review"
+              style={styles.tab}
+            />
+            <AppBarTab
+              tabName="My reviews"
+              path="/myreview"
               style={styles.tab}
             />
             <AppBarTab

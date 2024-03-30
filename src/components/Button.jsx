@@ -11,17 +11,21 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   danger: {
-    backgroundColor: theme.colors.danger,
+    backgroundColor: theme.colors.error,
     paddingVertical: 12,
     alignItems: "center",
     borderRadius: 4,
   },
 });
 
-const Button = ({ value, onSubmit, danger }) => {
+const Button = ({ value, onSubmit, style, danger }) => {
+  const buttonStyle = [
+    danger ? styles.danger : styles.button,
+    style,
+  ];
   return (
     <Pressable
-      style={danger ? styles.danger : styles.button}
+      style={buttonStyle}
       onPress={onSubmit}
     >
       <Text color="white" fontSize="subheading" fontWeight="bold">

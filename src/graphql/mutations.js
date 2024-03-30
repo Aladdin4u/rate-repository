@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { REPOSITORY_DETAILS, REVIEW_DETAILS, USER_DETAILS } from "./fragments";
 
 export const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
@@ -11,11 +12,10 @@ export const LOGIN = gql`
 export const CREATEUSER = gql`
   mutation CreateUser($username: String!, $password: String!) {
     createUser(user: { username: $username, password: $password }) {
-      id
-      username
-      createdAt
+      ...usersDetails
     }
   }
+  ${USER_DETAILS}
 `;
 
 export const CREATEREVIEW = gql`
@@ -33,14 +33,18 @@ export const CREATEREVIEW = gql`
         text: $text
       }
     ) {
+      ...reviewsDetails
       repositoryId
-      createdAt
-      rating
-      text
       user {
-        username
-        id
+        ...usersDetails
       }
     }
+  }
+  ${REVIEW_DETAILS}
+  ${USER_DETAILS}
+`;
+export const DELETEREVIEW = gql`
+  mutation DeleteReview($deleteReviewId: ID!) {
+    deleteReview(id: $deleteReviewId)
   }
 `;

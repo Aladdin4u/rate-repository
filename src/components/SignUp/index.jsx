@@ -15,8 +15,7 @@ const SignUp = () => {
   const [error, setError] = useState("");
 
   const onSubmit = async (values) => {
-    const { username, password, confirmPassword } = values;
-    console.log(values);
+    const { username, password } = values;
 
     try {
       const data = await createUser({ username, password });

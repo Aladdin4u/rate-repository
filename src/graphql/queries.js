@@ -36,7 +36,7 @@ export const GET_REPOSITORIES = gql`
   ${REPOSITORY_DETAILS}
 `;
 
-export const GET_LOGGEDIN_USER = gql`
+export const GET_CURRENT_USER = gql`
   query getCurrentUser($includeReviews: Boolean = false) {
     me {
       ...usersDetails
@@ -44,6 +44,10 @@ export const GET_LOGGEDIN_USER = gql`
         edges {
           node {
             ...reviewsDetails
+            repositoryId
+            user {
+              ...usersDetails
+            }
           }
         }
       }
