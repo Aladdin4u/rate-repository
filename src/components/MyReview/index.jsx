@@ -6,9 +6,7 @@ import useCurrentUser from "../../hook/useCurrentUser";
 import useDeleteReview from "../../hook/useDeleteReview";
 
 const MyReview = () => {
-  const includeReviews = true;
-
-  const { user, loading, error, refetch } = useCurrentUser(includeReviews);
+  const { user, loading, error, refetch } = useCurrentUser(true);
   const [deleteReview] = useDeleteReview();
 
   if (loading) {
@@ -22,13 +20,19 @@ const MyReview = () => {
   const reviews = user ? user.reviews.edges.map((edge) => edge.node) : [];
 
   const onDelete = (id) => {
-    Alert.alert("Alert Title", "Delete Review", [
-      {
-        text: "CANCEL",
-        onPress: () => console.log("Cancel Pressed"),
-      },
-      { text: "DELETE", onPress: () => handleDelete(id) },
-    ]);
+    Alert.alert(
+      "Alert Title",
+      "Delete Review",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => null,
+          style: "cancel",
+        },
+        { text: "DELETE", onPress: () => handleDelete(id) },
+      ],
+      { cancelable: fals }
+    );
   };
 
   const handleDelete = async (id) => {

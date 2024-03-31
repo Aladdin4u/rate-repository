@@ -29,3 +29,11 @@ export const USER_DETAILS = gql`
     username
   }
 `;
+
+export const PAGE_INFO_DETAILS = gql`
+  fragment pageInfoDetails on PageInfo {
+    startCursor
+    endCursor
+    hasNextPage
+  }
+`;

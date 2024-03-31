@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 
 const AppBar = () => {
   const navigate = useNavigate();
-  const { user } = useCurrentUser();
+  const { user } = useCurrentUser(false);
   const authStorage = useAuthStorage();
   const apolloclient = useApolloClient();
 

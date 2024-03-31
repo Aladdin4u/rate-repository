@@ -1,8 +1,13 @@
 import { gql } from "@apollo/client";
-import { REPOSITORY_DETAILS, REVIEW_DETAILS, USER_DETAILS } from "./fragments";
+import {
+  REPOSITORY_DETAILS,
+  REVIEW_DETAILS,
+  USER_DETAILS,
+  PAGE_INFO_DETAILS,
+} from "./fragments";
 
 export const GET_REPOSITORIES = gql`
-  query (
+  query getRepositories(
     $after: String
     $first: Int
     $orderDirection: OrderDirection
@@ -26,18 +31,16 @@ export const GET_REPOSITORIES = gql`
       }
       totalCount
       pageInfo {
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
+        ...pageInfoDetails
       }
     }
   }
   ${REPOSITORY_DETAILS}
+  ${PAGE_INFO_DETAILS}
 `;
 
 export const GET_CURRENT_USER = gql`
-  query getCurrentUser($includeReviews: Boolean = false) {
+  query getCurrentUser($includeReviews: Boolean!) {
     me {
       ...usersDetails
       reviews @include(if: $includeReviews) {
@@ -53,16 +56,16 @@ export const GET_CURRENT_USER = gql`
       }
     }
   }
-  ${REVIEW_DETAILS}
   ${USER_DETAILS}
+  ${REVIEW_DETAILS}
 `;
 
 export const GET_REPOSITORY = gql`
-  query ($repositoryId: ID!) {
+  query getRepositories($repositoryId: ID!, $after: String, $first: Int) {
     repository(id: $repositoryId) {
       ...repostoriesDetails
       url
-      reviews {
+      reviews(after: $after, first: $first) {
         edges {
           node {
             ...reviewsDetails
@@ -70,11 +73,16 @@ export const GET_REPOSITORY = gql`
               ...usersDetails
             }
           }
+          cursor
+        }
+        pageInfo {
+          ...pageInfoDetails
         }
       }
     }
   }
-  ${REPOSITORY_DETAILS}
-  ${REVIEW_DETAILS}
   ${USER_DETAILS}
+  ${REVIEW_DETAILS}
+  ${PAGE_INFO_DETAILS}
+  ${REPOSITORY_DETAILS}
 `;

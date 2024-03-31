@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { FlatList } from "react-native";
 
 import FilterHeader from "./FilterHeader";
@@ -66,7 +66,8 @@ export class RepositoryListContainer extends React.Component {
   };
 
   render() {
-    const { repositories } = this.props;
+    const { repositories, onEndReach } = this.props;
+    
     const repositoryNodes = repositories
       ? repositories.edges.map((edge) => edge.node)
       : [];
@@ -78,6 +79,8 @@ export class RepositoryListContainer extends React.Component {
         renderItem={({ item }) => <RepositoryItem item={item} />}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={this.renderHeader}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     );
   }

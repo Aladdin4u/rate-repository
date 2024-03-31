@@ -7,8 +7,9 @@ import RepositoryInfo from "./RepositoryInfo";
 import useRepository from "../../hook/useRepository";
 
 const SingleRepository = () => {
+  const first = 3;
   let { id } = useParams();
-  const { repository, loading, error } = useRepository(id);
+  const { repository, loading, error, fetchMore } = useRepository(id, first);
 
   if (loading) {
     return null;
@@ -18,6 +19,12 @@ const SingleRepository = () => {
     console.log(error);
   }
 
+  const onEndReach = () => {
+    console.log("ss You have reached single the end of the list");
+    fetchMore();
+  };
+
+  console.log(repository);
   const reviews = repository
     ? repository.reviews.edges.map((edge) => edge.node)
     : [];
@@ -30,6 +37,8 @@ const SingleRepository = () => {
         keyExtractor={({ id }) => id}
         ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
         ItemSeparatorComponent={ItemSeparator}
+        onEndReach={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     </>
   );

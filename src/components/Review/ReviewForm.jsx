@@ -83,7 +83,7 @@ const ReviewForm = ({ onSubmit, submissionError }) => {
             multiline
           />
           <FormError errorMessage={submissionError} />
-          <Button onSubmit={handleSubmit} value="Sign In" />
+          <Button onSubmit={handleSubmit} value="Create a review" />
         </View>
       )}
     </Formik>

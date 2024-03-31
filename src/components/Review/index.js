@@ -20,7 +20,7 @@ const Review = () => {
         repositoryName,
         text,
       });
-      console.log("ddd===", data);
+      
       navigate(`/repository/${data.createReview.repositoryId}`);
     } catch (e) {
       //   console.log(e);
