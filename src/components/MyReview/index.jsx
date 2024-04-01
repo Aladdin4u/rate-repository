@@ -31,7 +31,7 @@ const MyReview = () => {
         },
         { text: "DELETE", onPress: () => handleDelete(id) },
       ],
-      { cancelable: fals }
+      { cancelable: false }
     );
   };
 
